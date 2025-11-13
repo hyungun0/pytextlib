@@ -1,39 +1,40 @@
-def parse_csv(csv_string: str, separator: str = ',') -> list[dict]:
+def parse_csv(input_string: str, separator: str = ',') -> list[dict]:
     """
     Parses a CSV formatted string into a list of dictionaries.
 
-    The first line of the CSV string is expected to be the header row,
-    and each subsequent line is treated as a data row.
+    The first line of the CSV string is expected to be the header row.
 
     Args:
-        csv_string (str): The string containing CSV data.
-        separator (str, optional): The character used as a column delimiter.
-                                   Defaults to ','.
+        input_string (str): The string containing CSV data.
+        separator (str, optional): The delimiter for separating columns. Defaults to ','.
 
     Returns:
         A list of dictionaries, where each dictionary represents a row.
-        Returns an empty list if the input is invalid or contains no data rows.
-
-    Raises:
-        TypeError: If csv_string is not a string.
     """
-    if not isinstance(csv_string, str):
-        raise TypeError("Input 'csv_string' must be a string.")
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
 
-    lines = csv_string.strip().splitlines()
+    lines = input_string.strip().splitlines()
 
     if len(lines) < 2:
         return []
 
-    header = [h.strip() for h in lines[0].split(separator)]
+    # --- Core Logic ---
+    header_list = []
+    for h in lines[0].split(separator):
+        header_list.append(h.strip())
+
     data_rows = lines[1:]
 
-    result_list = []
-    for row in data_rows:
-        values = [v.strip() for v in row.split(separator)]
+    final_list = []
+    for row_string in data_rows:
+        values_list = []
+        for v in row_string.split(separator):
+            values_list.append(v.strip())
+        
+        if len(header_list) == len(values_list):
+            row_dict = dict(zip(header_list, values_list))
+            final_list.append(row_dict)
 
-        if len(header) == len(values):
-            row_dict = dict(zip(header, values))
-            result_list.append(row_dict)
-
-    return result_list
+    return final_list
