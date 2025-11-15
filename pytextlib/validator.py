@@ -1,10 +1,10 @@
 import re
 
 # --- Patterns ---
-DEFAULT_EMAIL_PATTERN = re.compile("""\A[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@
-(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z""", re.IGNORECASE)
+DEFAULT_EMAIL_PATTERN = re.compile(r"""\A[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@
+(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$""", re.IGNORECASE | re.VERBOSE)
 
-RFC5322_EMAIL_PATTERN = re.compile("""\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*
+RFC5322_EMAIL_PATTERN = re.compile(r"""\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*
   |  "(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]
       |  \\[\x01-\x09\x0b\x0c\x0e-\x7f])*")
 @ (?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
@@ -12,7 +12,7 @@ RFC5322_EMAIL_PATTERN = re.compile("""\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z
        (?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:
           (?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]
           |  \\[\x01-\x09\x0b\x0c\x0e-\x7f])+)
-     \])\z""", re.IGNORECASE)
+     \])$""", re.IGNORECASE | re.VERBOSE)
 
 def is_email(input_string: str, mode: str = "default") -> bool:
     """
