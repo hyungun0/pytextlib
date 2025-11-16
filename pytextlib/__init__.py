@@ -9,6 +9,7 @@ robust, and self-documented.
 from .formatter import slugify, truncate_text, generate_initials
 from .parser import parse_csv
 from .validator import is_email
+from. analyzer import analyze_text
 
 __all__ = [
     "slugify",
@@ -16,4 +17,5 @@ __all__ = [
     "generate_initials",
     "parse_csv",
     "is_email",
+    "analyze_text"
 ]
