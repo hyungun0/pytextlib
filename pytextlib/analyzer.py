@@ -28,6 +28,8 @@ def analyze_text(input_string: str) -> dict:
     words = input_string.split()
     word_count = len(words)
 
+    print(words)
+
     return {
         "char_count": char_count,
         "word_count": word_count,
