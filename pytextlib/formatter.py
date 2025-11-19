@@ -9,7 +9,7 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
 
     Returns:
         str: The converted slug string.
-
+[]
     Raises:
         ValueError: If the separator is invalid.
     """
@@ -91,10 +91,10 @@ def generate_initials(input_string: str) -> str:
         return ""
 
     # --- Core Logic ---
-    words = input_string.split()
+    word_list = input_string.split()
 
     initials_list = []
-    for word in words:
+    for word in word_list:
         if word:
             initials_list.append(word[0])
 
