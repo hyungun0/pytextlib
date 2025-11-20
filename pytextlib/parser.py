@@ -22,16 +22,16 @@ def parse_csv(input_string: str, separator: str = ',') -> list[dict]:
 
     # --- Core Logic ---
     header_list = []
-    for h in lines[0].split(separator):
-        header_list.append(h.strip())
+    for header in lines[0].split(separator):
+        header_list.append(header.strip())
 
     data_rows = lines[1:]
 
     final_list = []
     for row_string in data_rows:
         values_list = []
-        for v in row_string.split(separator):
-            values_list.append(v.strip())
+        for value in row_string.split(separator):
+            values_list.append(value.strip())
         
         if len(header_list) == len(values_list):
             row_dict = dict(zip(header_list, values_list))
