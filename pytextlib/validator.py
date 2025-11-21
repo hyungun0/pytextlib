@@ -14,13 +14,13 @@ RFC5322_EMAIL_PATTERN = re.compile(r"""\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-
           |  \\[\x01-\x09\x0b\x0c\x0e-\x7f])+)
      \])$""", re.IGNORECASE | re.VERBOSE)
 
-def is_email(input_string: str, mode: str = "default") -> bool:
+def is_email(input_string: str, validation_mode: str = "default") -> bool:
     """
     Validates if a string is a well-formed email address.
 
     Args:
         input_string (str): The string to validate.
-        mode (str, optional): The validation mode to use.
+        validation_mode (str, optional): The validation mode to use.
                               'default': A practical regex for common email formats.
                               'rfc5322': A stricter regex compliant with the RFC 5322 standard.
                               Defaults to 'default'.
@@ -37,9 +37,9 @@ def is_email(input_string: str, mode: str = "default") -> bool:
         raise TypeError("Input 'input_string' must be a string.")
     
     # --- Core Logic ---
-    if mode == "default":
+    if validation_mode == "default":
         return bool(re.fullmatch(DEFAULT_EMAIL_PATTERN, input_string))
-    elif mode == "rfc5322":
+    elif validation_mode == "rfc5322":
         return bool(re.fullmatch(RFC5322_EMAIL_PATTERN, input_string))
     else:
-        raise ValueError(f"Unknown mode: '{mode}'. Available modes are 'default' and 'rfc5322'.")
+        raise ValueError(f"Unknown mode: '{validation_mode}'. Available modes are 'default' and 'rfc5322'.")
