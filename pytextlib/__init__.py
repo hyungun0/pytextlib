@@ -9,13 +9,13 @@ robust, and self-documented.
 from .formatter import slugify, truncate_text, generate_initials
 from .parser import parse_csv
 from .validator import is_email
-from. analyzer import analyze_text
+from .analyzer import analyze_text
 
 __all__ = [
-    "slugify",
-    "truncate_text",
+    "analyze_text",
     "generate_initials",
-    "parse_csv",
     "is_email",
-    "analyze_text"
+    "parse_csv",
+    "slugify",
+    "truncate_text"
 ]
