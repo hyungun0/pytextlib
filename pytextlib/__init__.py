@@ -6,10 +6,10 @@ text-manipulation tasks in Python. Each function is designed to be clear,
 robust, and self-documented.
 """
 
+from .analyzer import analyze_text
 from .formatter import slugify, truncate_text, generate_initials
 from .parser import parse_csv
 from .validator import is_email
-from .analyzer import analyze_text
 
 __all__ = [
     "analyze_text",
