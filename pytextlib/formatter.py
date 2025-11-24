@@ -24,9 +24,9 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
     text = text.replace(' ', separator)
     
     slug = ""
-    for char in text:
-        if char.isalnum() or char == separator:
-            slug += char
+    for character in text:
+        if character.isalnum() or character == separator:
+            slug += character
 
     return slug
 
