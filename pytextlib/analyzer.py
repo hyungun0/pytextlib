@@ -25,10 +25,8 @@ def analyze_text(input_string: str) -> dict:
     # --- Core Logic ---
     char_count = len(input_string)
 
-    words = input_string.split()
-    word_count = len(words)
-
-    print(words)
+    word_list = input_string.split()
+    word_count = len(word_list)
 
     return {
         "char_count": char_count,
