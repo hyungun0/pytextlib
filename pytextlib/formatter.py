@@ -14,6 +14,9 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
         ValueError: If the separator is invalid.
     """
     # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    
     if len(separator) > 1 or separator.isalnum():
         raise ValueError("Separator must be a single, non-alphanumeric character.")
         
