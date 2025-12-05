@@ -30,6 +30,7 @@ def is_email(input_string: str, validation_mode: str = "default") -> bool:
         False otherwise.
 
     Raises:
+        TypeError: If the input is not a string.
         ValueError: If an unknown mode is specified.
     """
     # --- Input Validation ---
