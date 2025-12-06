@@ -27,7 +27,7 @@ def parse_csv(input_string: str, separator: str = ',') -> list[dict]:
 
     data_rows = lines[1:]
 
-    final_list = []
+    result_list = []
     for row_string in data_rows:
         values_list = []
         for value in row_string.split(separator):
@@ -35,6 +35,6 @@ def parse_csv(input_string: str, separator: str = ',') -> list[dict]:
         
         if len(header_list) == len(values_list):
             row_dict = dict(zip(header_list, values_list))
-            final_list.append(row_dict)
+            result_list.append(row_dict)
 
-    return final_list
+    return result_list
