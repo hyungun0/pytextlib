@@ -1,3 +1,5 @@
+import re
+
 def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-') -> str:
     """
     Converts a string into a URL-friendly slug.
@@ -102,3 +104,47 @@ def generate_initials(input_string: str) -> str:
             initials_list.append(word[0])
 
     return "".join(initials_list).upper()
+
+
+def convert_case(input_string: str, style: str = 'snake') -> str:
+    """
+    Converts a string to the specified case style.
+
+    Supported styles:
+    - 'snake': hello_world
+    - 'kebab': hello-world
+    - 'camel': helloWorld
+    - 'pascal': HelloWorld
+
+    Args:
+        input_string (str): The string to convert.
+        style (str): The target style ('snake', 'kebab', 'camel', 'pascal').
+
+    Returns:
+        str: The converted string.
+
+    Raises:
+        TypeError: If the input is not a string.
+        ValueError: If an unknown style is specified.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+
+    # --- Core Logic ---
+    text_with_spaces = re.sub(r'([A-Z])', r' \1', input_string)
+    words = [word.lower() for word in re.split(r'[_\-\s]+', text_with_spaces) if word]
+
+    if not words:
+        return ""
+
+    if style == 'snake':
+        return '_'.join(words)
+    elif style == 'kebab':
+        return '-'.join(words)
+    elif style == 'camel':
+        return words[0] + ''.join(word.capitalize() for word in words[1:])
+    elif style == 'pascal':
+        return ''.join(word.capitalize() for word in words)
+    else:
+        raise ValueError(f"Unknown style: '{style}'. Supported: snake, kebab, camel, pascal")
