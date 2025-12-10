@@ -131,6 +131,8 @@ def convert_case(input_string: str, style: str = 'snake') -> str:
     if not isinstance(input_string, str):
         raise TypeError("Input 'input_string' must be a string.")
 
+    style = style.lower()
+    
     # --- Core Logic ---
     text_with_spaces = re.sub(r'([A-Z])', r' \1', input_string)
     words = [word.lower() for word in re.split(r'[_\-\s]+', text_with_spaces) if word]
