@@ -100,7 +100,7 @@ def generate_initials(input_string: str) -> str:
 
     initials_list = []
     for word in word_list:
-        if word:
+        if word[0].isalnum():
             initials_list.append(word[0])
 
     return "".join(initials_list).upper()
