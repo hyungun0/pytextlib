@@ -6,6 +6,7 @@ def analyze_text(input_string: str) -> dict:
     - char_count: Total number of characters
     - char_count_no_spaces: Number of characters excluding all whitespace
     - word_count: Total number of words
+    - line_count: Total number of lines
 
     Args:
         input_string: The string to be analyzed.
@@ -15,7 +16,8 @@ def analyze_text(input_string: str) -> dict:
         e.g., {
             'char_count': 11,
             'char_count_no_spaces': 10,
-            'word_count': 2
+            'word_count': 2,
+            'line_count': 1
         }
 
     Raises:
@@ -29,7 +31,8 @@ def analyze_text(input_string: str) -> dict:
         return {
             "char_count": 0,
             "char_count_no_spaces": 0,
-            "word_count": 0
+            "word_count": 0,
+            "line_count": 0
         }
     
     # --- Core Logic ---
@@ -40,8 +43,11 @@ def analyze_text(input_string: str) -> dict:
     word_list = input_string.split()
     word_count = len(word_list)
 
+    line_count = len(input_string.splitlines())
+
     return {
         "char_count": char_count,
         "char_count_no_spaces": char_count_no_spaces,
         "word_count": word_count,
+        "line_count": line_count
     }
