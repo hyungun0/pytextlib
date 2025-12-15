@@ -11,7 +11,7 @@ This project was created to provide reliable, easy-to-use tools for the small bu
 This library offers a range of tools to simplify your text-processing workflow.
 
 *   *   **Formatting:** Clean up, truncate, and reformat text with functions like `slugify`, `generate_initials`, and `convert_case`.
-*   **Parsing & Analysis:** Parse structured data from strings (`parse_csv`) and get simple text statistics (`analyze_text`).
+*   **Parsing & Analysis:** Parse structured data (`parse_csv`) and analyze text statistics like word, character, and line counts (`analyze_text`).
 *   **Validation:** Check if a string conforms to a specific format, such as an email address (`is_email`).
 
 > For a complete list of all functions, please see the `pytextlib/__init__.py` file.
@@ -19,7 +19,7 @@ This library offers a range of tools to simplify your text-processing workflow.
 ---
 
 ## 🚀 Installation
-
+    
 While this library is not yet on PyPI, you can install it directly from GitHub using `pip`:
 
 ```bash
