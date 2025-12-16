@@ -37,6 +37,8 @@ def is_email(input_string: str, validation_mode: str = "default") -> bool:
     if not isinstance(input_string, str):
         raise TypeError("Input 'input_string' must be a string.")
     
+    validation_mode = validation_mode.lower()
+    
     # --- Core Logic ---
     if validation_mode == "default":
         return bool(re.fullmatch(DEFAULT_EMAIL_PATTERN, input_string))
