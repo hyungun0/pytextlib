@@ -14,6 +14,8 @@ RFC5322_EMAIL_PATTERN = re.compile(r"""(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0
           |  \\[\x01-\x09\x0b\x0c\x0e-\x7f])+)
      \])""", re.IGNORECASE | re.VERBOSE)
 
+URL_PATTERN = r"https?://(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,63}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&/=]*)"
+
 def extract_emails(input_string: str, extract_mode: str = "default") -> list[str]:
     """
     Extracts all email addresses from a given string.
@@ -46,3 +48,21 @@ def extract_emails(input_string: str, extract_mode: str = "default") -> list[str
         return re.findall((RFC5322_EMAIL_PATTERN), input_string)
     else:
         raise ValueError(f"Unknown mode: '{extract_mode}'. Available modes are 'default' and 'rfc5322'.")
+    
+def extract_urls(input_string: str) -> list[str]:
+    """
+    Extracts all URLs starting with http or https from a given string.
+
+    Args:
+        input_string (str): The text containing URLs.
+
+    Returns:
+        list[str]: A list of extracted URLs.
+    """
+
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+
+    # --- Core Logic ---
+    return re.findall(URL_PATTERN, input_string)
