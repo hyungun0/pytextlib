@@ -150,3 +150,42 @@ def convert_case(input_string: str, style: str = 'snake') -> str:
         return ''.join(word.capitalize() for word in words)
     else:
         raise ValueError(f"Unknown style: '{style}'. Supported: snake, kebab, camel, pascal")
+
+
+def pad_text(input_string: str, width: int, fill_char: str = '_') -> str:
+    """
+    Pads the string with a specific character to reach the desired width.
+    (Appends padding to the end of the string)
+
+    Args:
+        input_string (str): The string to pad.
+        width (int): The desired total width.
+        fill_char (str, optional): The character to fill empty spaces with. Defaults to '_'.
+
+    Returns:
+        str: The padded string.
+
+    Raises:
+        TypeError: If inputs are not valid types.
+        ValueError: If fill_char is not a single character.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    
+    if not isinstance(width, int):
+        raise TypeError("Input 'width' must be an integer.")
+    
+    if not isinstance(fill_char, str):
+        raise TypeError("Input 'fill_char' must be a string.")
+    
+    if len(fill_char) != 1:
+        raise ValueError("Input 'fill_char' must be exactly one character.")
+
+    # --- Core Logic ---
+    if len(input_string) >= width:
+        return input_string
+    
+    padding_len = width - len(input_string)
+    
+    return input_string + (fill_char * padding_len)
