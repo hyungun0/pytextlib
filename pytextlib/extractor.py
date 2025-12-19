@@ -22,7 +22,7 @@ def extract_emails(input_string: str, extract_mode: str = "default") -> list[str
 
     Args:
         input_string (str): The text containing email addresses.
-        mode (str, optional): The extraction mode to use.
+        extract_mode (str, optional): The extraction mode to use.
                               'default': A practical regex for common email formats.
                               'rfc5322': Currently uses the same robust pattern as default.
                               Defaults to 'default'.
