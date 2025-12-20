@@ -152,22 +152,23 @@ def convert_case(input_string: str, style: str = 'snake') -> str:
         raise ValueError(f"Unknown style: '{style}'. Supported: snake, kebab, camel, pascal")
 
 
-def pad_text(input_string: str, width: int, fill_char: str = '_') -> str:
+def pad_text(input_string: str, width: int, fill_char: str = '_', side: str = 'right') -> str:
     """
     Pads the string with a specific character to reach the desired width.
-    (Appends padding to the end of the string)
 
     Args:
         input_string (str): The string to pad.
         width (int): The desired total width.
-        fill_char (str, optional): The character to fill empty spaces with. Defaults to '_'.
+        fill_char (str, optional): The character to fill with. Defaults to '_'.
+        side (str, optional): Which side to add padding to ('left' or 'right'). 
+                              Defaults to 'right'.
 
     Returns:
         str: The padded string.
 
     Raises:
         TypeError: If inputs are not valid types.
-        ValueError: If fill_char is not a single character.
+        ValueError: If fill_char is not a single character or side is invalid.
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
@@ -188,4 +189,9 @@ def pad_text(input_string: str, width: int, fill_char: str = '_') -> str:
     
     padding_len = width - len(input_string)
     
-    return input_string + (fill_char * padding_len)
+    if side == "right":
+        return input_string + (fill_char * padding_len)
+    if side == "left":
+        return (fill_char * padding_len) + input_string
+    else:
+        raise ValueError("side must be either 'left' or 'right'.")
