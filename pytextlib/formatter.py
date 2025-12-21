@@ -182,6 +182,9 @@ def pad_text(input_string: str, width: int, fill_char: str = '_', side: str = 'r
     
     if len(fill_char) != 1:
         raise ValueError("Input 'fill_char' must be exactly one character.")
+    
+    if isinstance(side, str):
+        side = side.lower()
 
     # --- Core Logic ---
     if len(input_string) >= width:
