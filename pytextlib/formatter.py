@@ -173,10 +173,8 @@ def pad_text(input_string: str, width: int, fill_char: str = '_', side: str = 'r
     # --- Input Validation ---
     if not isinstance(input_string, str):
         raise TypeError("Input 'input_string' must be a string.")
-    
     if not isinstance(width, int):
         raise TypeError("Input 'width' must be an integer.")
-    
     if not isinstance(fill_char, str):
         raise TypeError("Input 'fill_char' must be a string.")
     
@@ -198,3 +196,49 @@ def pad_text(input_string: str, width: int, fill_char: str = '_', side: str = 'r
         return (fill_char * padding_len) + input_string
     else:
         raise ValueError("side must be either 'left' or 'right'.")
+
+
+def mask_text(input_string: str, start: int, end: int, mask_char: str = '*') ->  str:
+    """
+    Masks a specific range of characters in a string with a chosen character.
+
+    Following Python's slicing convention, the character at the 'start' index
+    is included in the mask, while the character at the 'end' index is not.
+
+    Args:
+        input_string (str): The original string to mask.
+        start (int): The starting index of the masking range (inclusive).
+        end (int): The ending index of the masking range (exclusive).
+        mask_char (str, optional): The character used to mask the text. Defaults to '*'.
+
+    Returns:
+        str: The masked string.
+
+    Raises:
+        TypeError: If inputs are not valid types.
+        ValueError: If start index is greater than end index, or mask_char is not one character.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input must be a string.")
+    if not isinstance(start, int) or not isinstance(end, int):
+        raise TypeError("Indices 'start' and 'end' must be integers.")
+    if not isinstance(mask_char, str):
+        raise TypeError("Input 'mask_char' must be a string.")
+    
+    if len(mask_char) != 1:
+        raise ValueError("Input 'mask_char' must be exactly one character.")
+    
+    if start < 0 or end < 0:
+        raise ValueError("Indices must be zero or positive.")
+    
+    if start > end:
+        raise ValueError("start index cannot be greater than end index.")
+    
+    # --- Core Logic ---
+    actual_end = min(end, len(input_string))
+
+    if start >= len(input_string):
+        return input_string
+
+    return input_string[:start] + mask_char * (actual_end - start) + input_string[actual_end:]
