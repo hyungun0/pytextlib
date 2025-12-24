@@ -7,7 +7,7 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
     Args:
         input_string (str): The string to convert.
         force_lowercase (bool, optional): Converts to lowercase if True. Defaults to True.
-        separator (str, optional): The character to replace spaces with. Defaults to '-'.
+        separator (str, optional): The boundary_character to replace spaces with. Defaults to '-'.
 
     Returns:
         str: The converted slug string.
@@ -20,7 +20,7 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
         raise TypeError("Input 'input_string' must be a string.")
     
     if len(separator) > 1 or separator.isalnum():
-        raise ValueError("Separator must be a single, non-alphanumeric character.")
+        raise ValueError("Separator must be a single, non-alphanumeric boundary_character.")
         
     # --- Core Logic ---
     text = input_string
@@ -29,31 +29,31 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
     text = text.replace(' ', separator)
     
     slug = ""
-    for character in text:
-        if character.isalnum() or character == separator:
-            slug += character
+    for boundary_character in text:
+        if boundary_character.isalnum() or boundary_character == separator:
+            slug += boundary_character
 
     return slug
 
 
-def truncate_text(input_string: str, max_length: int, suffix: str = "...", preserve_words: bool = True) -> str:
+def truncate_text(input_string: str, max_length: int, suffix: str = "...", preserve_words: bool = True, word_boundaries: str =" \n\t") -> str:
     """
-    Truncates a string to a specified length and appends a suffix.
-
-    If preserve_words is True, it avoids cutting words in the middle by searching 
-    for the last whitespace within the allowed length.
+    Truncates a string to a specified length while optionally preserving whole words.
 
     Args:
         input_string (str): The string to truncate.
-        max_length (int): The maximum number of characters to keep.
+        max_length (int): The maximum number of boundary_characters to keep.
         suffix (str, optional): The string to append after truncation. Defaults to "...".
-        preserve_words (bool, optional): Whether to truncate at word boundaries. Defaults to True.
+        preserve_words (bool, optional): If True, avoids cutting in the middle of words. 
+                                         Defaults to True.
+        word_boundaries (str, optional): boundary_characters treated as word boundaries. 
+                                         Defaults to " \n\t".
 
     Returns:
         str: The truncated string, or the original if it was already short enough.
 
     Raises:
-        TypeError: If input_string is not str, max_length is not int, or preserve_words is not bool.
+        TypeError: If inputs are not the expected types.
         ValueError: If max_length is not a positive integer.
     """
     # --- Input Validation ---
@@ -63,6 +63,8 @@ def truncate_text(input_string: str, max_length: int, suffix: str = "...", prese
         raise TypeError("Input 'max_length' must be an integer.")
     if not isinstance(preserve_words, bool):
         raise TypeError("Input 'preserve_words' must be a boolean.")
+    if not isinstance(word_boundaries, str):
+        raise TypeError("word_boundaries must be a string.")
 
     if max_length <= 0:
         raise ValueError("Input 'max_length' must be a positive integer.")
@@ -71,11 +73,20 @@ def truncate_text(input_string: str, max_length: int, suffix: str = "...", prese
     if len(input_string) <= max_length:
         return input_string
     
-    if preserve_words and input_string[max_length] != " ":
-        last_space = input_string[:max_length].rfind(" ")
-        if last_space != -1:
-            return input_string[:last_space] + suffix
-    
+    if preserve_words and input_string[max_length] not in word_boundaries:
+        
+        last_boundary_index = -1
+        temp_string= input_string[:max_length]
+
+        for boundary_char in word_boundaries:
+            found_pos = temp_string.rfind(boundary_char)
+
+            if found_pos > last_boundary_index:
+                last_boundary_index = found_pos
+
+        if last_boundary_index != -1:
+            return input_string[:last_boundary_index] + suffix
+        
     return input_string[:max_length] + suffix
 
 
@@ -83,7 +94,7 @@ def generate_initials(input_string: str) -> str:
     """
     Generates initials from a given name or phrase.
 
-    It splits the input string by spaces, takes the first character of each part,
+    It splits the input string by spaces, takes the first boundary_character of each part,
     and returns them joined together as an uppercase string.
 
     Args:
@@ -159,14 +170,14 @@ def convert_case(input_string: str, style: str = 'snake') -> str:
         raise ValueError(f"Unknown style: '{style}'. Supported: snake, kebab, camel, pascal")
 
 
-def pad_text(input_string: str, width: int, fill_char: str = '_', side: str = 'right') -> str:
+def pad_text(input_string: str, width: int, fill_boundary_char: str = '_', side: str = 'right') -> str:
     """
-    Pads the string with a specific character to reach the desired width.
+    Pads the string with a specific boundary_character to reach the desired width.
 
     Args:
         input_string (str): The string to pad.
         width (int): The desired total width.
-        fill_char (str, optional): The character to fill with. Defaults to '_'.
+        fill_boundary_char (str, optional): The boundary_character to fill with. Defaults to '_'.
         side (str, optional): Which side to add padding to ('left' or 'right'). 
                               Defaults to 'right'.
 
@@ -175,18 +186,18 @@ def pad_text(input_string: str, width: int, fill_char: str = '_', side: str = 'r
 
     Raises:
         TypeError: If inputs are not valid types.
-        ValueError: If fill_char is not a single character or side is invalid.
+        ValueError: If fill_boundary_char is not a single boundary_character or side is invalid.
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
         raise TypeError("Input 'input_string' must be a string.")
     if not isinstance(width, int):
         raise TypeError("Input 'width' must be an integer.")
-    if not isinstance(fill_char, str):
-        raise TypeError("Input 'fill_char' must be a string.")
+    if not isinstance(fill_boundary_char, str):
+        raise TypeError("Input 'fill_boundary_char' must be a string.")
     
-    if len(fill_char) != 1:
-        raise ValueError("Input 'fill_char' must be exactly one character.")
+    if len(fill_boundary_char) != 1:
+        raise ValueError("Input 'fill_boundary_char' must be exactly one boundary_character.")
     
     if isinstance(side, str):
         side = side.lower()
@@ -198,43 +209,43 @@ def pad_text(input_string: str, width: int, fill_char: str = '_', side: str = 'r
     padding_len = width - len(input_string)
     
     if side == "right":
-        return input_string + (fill_char * padding_len)
+        return input_string + (fill_boundary_char * padding_len)
     if side == "left":
-        return (fill_char * padding_len) + input_string
+        return (fill_boundary_char * padding_len) + input_string
     else:
         raise ValueError("side must be either 'left' or 'right'.")
 
 
-def mask_text(input_string: str, start: int, end: int, mask_char: str = '*') ->  str:
+def mask_text(input_string: str, start: int, end: int, mask_boundary_char: str = '*') ->  str:
     """
-    Masks a specific range of characters in a string with a chosen character.
+    Masks a specific range of boundary_characters in a string with a chosen boundary_character.
 
-    Following Python's slicing convention, the character at the 'start' index
-    is included in the mask, while the character at the 'end' index is not.
+    Following Python's slicing convention, the boundary_character at the 'start' index
+    is included in the mask, while the boundary_character at the 'end' index is not.
 
     Args:
         input_string (str): The original string to mask.
         start (int): The starting index of the masking range (inclusive).
         end (int): The ending index of the masking range (exclusive).
-        mask_char (str, optional): The character used to mask the text. Defaults to '*'.
+        mask_boundary_char (str, optional): The boundary_character used to mask the text. Defaults to '*'.
 
     Returns:
         str: The masked string.
 
     Raises:
         TypeError: If inputs are not valid types.
-        ValueError: If start index is greater than end index, or mask_char is not one character.
+        ValueError: If start index is greater than end index, or mask_boundary_char is not one boundary_character.
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
         raise TypeError("Input must be a string.")
     if not isinstance(start, int) or not isinstance(end, int):
         raise TypeError("Indices 'start' and 'end' must be integers.")
-    if not isinstance(mask_char, str):
-        raise TypeError("Input 'mask_char' must be a string.")
+    if not isinstance(mask_boundary_char, str):
+        raise TypeError("Input 'mask_boundary_char' must be a string.")
     
-    if len(mask_char) != 1:
-        raise ValueError("Input 'mask_char' must be exactly one character.")
+    if len(mask_boundary_char) != 1:
+        raise ValueError("Input 'mask_boundary_char' must be exactly one boundary_character.")
     
     if start < 0 or end < 0:
         raise ValueError("Indices must be zero or positive.")
@@ -248,4 +259,4 @@ def mask_text(input_string: str, start: int, end: int, mask_char: str = '*') -> 
     if start >= len(input_string):
         return input_string
 
-    return input_string[:start] + mask_char * (actual_end - start) + input_string[actual_end:]
+    return input_string[:start] + mask_boundary_char * (actual_end - start) + input_string[actual_end:]
