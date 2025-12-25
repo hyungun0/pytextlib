@@ -46,3 +46,24 @@ def is_email(input_string: str, validation_mode: str = "default") -> bool:
         return bool(re.fullmatch(RFC5322_EMAIL_PATTERN, input_string))
     else:
         raise ValueError(f"Unknown mode: '{validation_mode}'. Available modes are 'default' and 'rfc5322'.")
+
+
+def is_blank(input_string: str) -> bool:
+    """
+    Checks if a string is empty or contains only whitespace characters.
+
+    Args:
+        input_string (str): The string to check.
+
+    Returns:
+        bool: True if the string is empty or whitespace only, False otherwise.
+
+    Raises:
+        TypeError: If input_string is not a string.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input must be a string.")
+
+    # --- Core Logic ---
+    return not input_string.strip()
