@@ -260,3 +260,24 @@ def mask_text(input_string: str, start: int, end: int, mask_boundary_char: str =
         return input_string
 
     return input_string[:start] + mask_boundary_char * (actual_end - start) + input_string[actual_end:]
+
+
+def remove_punctuation(input_string: str) -> str:
+    """
+    Removes all punctuation marks (symbols) from the string.
+
+    Args:
+        input_string (str): The string to clean.
+
+    Returns:
+        str: The string with punctuation removed.
+
+    Raises:
+        TypeError: If input_string is not a string.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    
+    # --- Core Logic ---
+    return "".join(char for char in input_string if char.isalnum() or char.isspace())
