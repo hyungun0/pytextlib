@@ -1,4 +1,5 @@
 import re
+from .validator import is_email
 
 def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-') -> str:
     """
@@ -281,3 +282,44 @@ def remove_punctuation(input_string: str) -> str:
     
     # --- Core Logic ---
     return "".join(char for char in input_string if char.isalnum() or char.isspace())
+
+
+def mask_email(input_string: str, mask_char: str = '*') -> str:
+    """
+    Masks the user ID part of an email address to protect privacy.
+
+    This function keeps the first character of the user ID and replaces the rest
+    with the specified mask character. The domain part remains unchanged.
+    It reuses the 'is_email' validator for robust format verification.
+
+    Args:
+        input_string (str): The email address to be masked.
+        mask_char (str, optional): The character used for masking. Defaults to '*'.
+
+    Returns:
+        str: The masked email address (e.g., 'u****@example.com').
+
+    Raises:
+        TypeError: If 'input_string' or 'mask_char' is not a string.
+        ValueError: If 'mask_char' is not exactly one character, or
+                    if 'input_string' is not a valid email format.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    
+    if not isinstance(mask_char, str):
+        raise TypeError("Input 'mask_char' must be a string.")
+    
+    if len(mask_char) != 1:
+        raise ValueError("Input 'mask_char' must be exactly one character.")
+    
+    if not is_email(input_string):
+        raise ValueError(f"Invalid email format: '{input_string}'")
+
+    # --- Core Logic ---
+    user_id, domain = input_string.split('@')
+
+    masked_id = user_id[0] + (mask_char * (len(user_id) - 1))
+    
+    return f"{masked_id}@{domain}"
