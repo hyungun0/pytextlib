@@ -10,7 +10,7 @@ from .analyzer import analyze_text
 from .extractor import extract_emails, extract_urls
 from .formatter import convert_case, generate_initials, mask_text, mask_email, pad_text, remove_punctuation, slugify, truncate_text
 from .parser import parse_csv
-from .validator import is_blank, is_email
+from .validator import is_blank, is_email, validate_filename
 
 __all__ = [
     "analyze_text",
@@ -27,4 +27,5 @@ __all__ = [
     "remove_punctuation",
     "slugify",
     "truncate_text",
+    "validate_filename"
 ]

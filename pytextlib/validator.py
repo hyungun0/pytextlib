@@ -67,3 +67,49 @@ def is_blank(input_string: str) -> bool:
 
     # --- Core Logic ---
     return not input_string.strip()
+
+
+def validate_filename(input_string: str) -> bool:
+    """
+    Validates a filename against OS standards and raises detailed errors if invalid.
+
+    Args:
+        input_string (str): The filename to validate.
+
+    Returns:
+        bool: True if the filename is valid.
+
+    Raises:
+        TypeError: If input_string is not a string.
+        ValueError: If the filename is empty, too long, contains forbidden 
+                    characters, uses reserved names, or has invalid trailing chars.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+
+    # --- Core Logic ---
+    if len(input_string) < 1 or len(input_string) > 255:
+        raise ValueError("Input 'input_string' must be between 1 and 255 characters.")
+    
+    forbidden_chars = "<>:\"/\|?*"
+    for char in input_string:
+        if char in forbidden_chars:
+            raise ValueError(f"Input 'input_string' contains a forbidden character: {char}")
+
+        if ord(char) < 32:
+            raise ValueError("Input 'input_string' contains invalid control characters.")
+
+    reserved_names = (
+    "CON", "PRN", "AUX", "NUL", 
+    "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", 
+    "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
+    )
+    pure_text = input_string.split('.')[0].upper()
+    if pure_text in reserved_names:
+        raise ValueError(f"Input 'input_string' uses a reserved name: {pure_text}")
+
+    if input_string.endswith((' ', '.')):
+        raise ValueError("Input 'input_string' cannot end with a space or a period.")
+
+    return True
