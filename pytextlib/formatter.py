@@ -65,7 +65,7 @@ def truncate_text(input_string: str, max_length: int, suffix: str = "...", prese
     if not isinstance(preserve_words, bool):
         raise TypeError("Input 'preserve_words' must be a boolean.")
     if not isinstance(word_boundaries, str):
-        raise TypeError("word_boundaries must be a string.")
+        raise TypeError("Input 'word_boundaries' must be a string.")
 
     if max_length <= 0:
         raise ValueError("Input 'max_length' must be a positive integer.")
@@ -109,7 +109,7 @@ def generate_initials(input_string: str) -> str:
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
-        raise TypeError("Input must be a string.")
+        raise TypeError("Input 'input_string' must be a string.")
 
     if not input_string.strip():
         return ""
@@ -239,7 +239,7 @@ def mask_text(input_string: str, start: int, end: int, mask_boundary_char: str =
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
-        raise TypeError("Input must be a string.")
+        raise TypeError("Input 'input_string' must be a string.")
     if not isinstance(start, int) or not isinstance(end, int):
         raise TypeError("Indices 'start' and 'end' must be integers.")
     if not isinstance(mask_boundary_char, str):
@@ -249,10 +249,10 @@ def mask_text(input_string: str, start: int, end: int, mask_boundary_char: str =
         raise ValueError("Input 'mask_boundary_char' must be exactly one boundary_character.")
     
     if start < 0 or end < 0:
-        raise ValueError("Indices must be zero or positive.")
+        raise ValueError("Input 'start' and 'end' must be zero or positive.")
     
     if start > end:
-        raise ValueError("start index cannot be greater than end index.")
+        raise ValueError("Input 'start' index cannot be greater than 'end' index.")
     
     # --- Core Logic ---
     actual_end = min(end, len(input_string))

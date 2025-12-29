@@ -63,7 +63,7 @@ def is_blank(input_string: str) -> bool:
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
-        raise TypeError("Input must be a string.")
+        raise TypeError("Input 'input_string' must be a string.")
 
     # --- Core Logic ---
     return not input_string.strip()

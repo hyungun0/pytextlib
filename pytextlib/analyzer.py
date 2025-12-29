@@ -25,7 +25,7 @@ def analyze_text(input_string: str) -> dict:
     """
      # --- Input Validation ---
     if not isinstance(input_string, str):
-        raise TypeError("Input must be a string.")
+        raise TypeError("Input 'input_string' must be a string.")
     
     if not input_string.strip():
         return {
