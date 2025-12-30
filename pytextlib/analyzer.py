@@ -51,3 +51,48 @@ def analyze_text(input_string: str) -> dict:
         "word_count": word_count,
         "line_count": line_count
     }
+
+
+def find_string_diff(input_string1: str, input_string2: str) -> list[dict]:
+    """
+    Compares two strings word by word and identifies the differences.
+
+    It splits both strings into word lists and identifies mismatched words 
+    at the same index. Both strings must have the same number of words.
+
+    Args:
+        input_string1 (str): The first string to compare.
+        input_string2 (str): The second string to compare.
+
+    Returns:
+        list[dict]: A list of differences. Each dictionary contains the index 
+                    and the mismatched words from both strings.
+                    e.g., [{'index': 2, 'string1': 'apple', 'string2': 'apply'}]
+
+    Raises:
+        TypeError: If either input is not a string.
+        ValueError: If the strings have a different number of words.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string1, str):
+        raise TypeError("Input 'input_string1' must be a string.")
+    if not isinstance(input_string2, str):
+        raise TypeError("Input 'input_string2' must be a string.")
+    
+    # --- Core Logic ---
+    words1 = input_string1.split()
+    words2 = input_string2.split()
+
+    if len(words1) != len(words2):
+        raise ValueError("Both strings must have the same number of words for comparison.")
+
+    diff_list = []
+    for index in range(len(words1)):
+        if words1[index] != words2[index]:
+            diff_list.append({
+                'index': index,
+                'string1': words1[index],
+                'string2': words2[index]
+            })
+
+    return diff_list

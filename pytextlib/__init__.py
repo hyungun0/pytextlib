@@ -6,7 +6,7 @@ text-manipulation tasks in Python. Each function is designed to be clear,
 robust, and self-documented.
 """
 
-from .analyzer import analyze_text
+from .analyzer import analyze_text, find_string_diff
 from .extractor import extract_emails, extract_urls
 from .formatter import convert_case, generate_initials, mask_text, mask_email, pad_text, remove_punctuation, slugify, truncate_text
 from .parser import parse_csv
@@ -17,6 +17,7 @@ __all__ = [
     "convert_case",
     "extract_emails",
     "extract_urls",
+    "find_string_diff",
     "generate_initials",
     "is_blank",
     "is_email",
