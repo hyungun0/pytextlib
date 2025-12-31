@@ -1,3 +1,5 @@
+import re
+
 def analyze_text(input_string: str) -> dict:
     """
     Analyzes a string to provide basic statistics.
@@ -53,46 +55,63 @@ def analyze_text(input_string: str) -> dict:
     }
 
 
-def find_string_diff(input_string1: str, input_string2: str) -> list[dict]:
+def find_string_diff(input_string1: str, input_string2: str, separator: str = None) -> list[dict]:
     """
-    Compares two strings word by word and identifies the differences.
+    Compares two strings based on one or more delimiters and identifies the differences.
 
-    It splits both strings into word lists and identifies mismatched words 
-    at the same index. Both strings must have the same number of words.
+    This function splits both strings into parts using the provided separator(s).
+    If multiple characters are provided in the separator string, each character
+    is treated as an individual delimiter.
 
     Args:
         input_string1 (str): The first string to compare.
         input_string2 (str): The second string to compare.
+        separator (str, optional): A string containing one or more characters 
+                                   to be used as delimiters. If None, any 
+                                   whitespace is used as a separator. 
+                                   Defaults to None.
 
     Returns:
-        list[dict]: A list of differences. Each dictionary contains the index 
-                    and the mismatched words from both strings.
+        list[dict]: A list of differences. Each dictionary contains the index,
+                    and the corresponding parts from both input strings.
                     e.g., [{'index': 2, 'string1': 'apple', 'string2': 'apply'}]
 
     Raises:
-        TypeError: If either input is not a string.
-        ValueError: If the strings have a different number of words.
+        TypeError: If input strings are not 'str', or if separator is provided but not 'str'.
+        ValueError: If the resulting lists have a different number of parts.
+        
+    Examples:
+        >>> find_string_diff("apple,banana/cherry", "apple.banana/berry", separator=",./")
+        [{'index': 2, 'string1': 'cherry', 'string2': 'berry'}]
     """
     # --- Input Validation ---
     if not isinstance(input_string1, str):
         raise TypeError("Input 'input_string1' must be a string.")
     if not isinstance(input_string2, str):
         raise TypeError("Input 'input_string2' must be a string.")
+    if separator is not None and not isinstance(separator, str):
+        raise TypeError("Input 'separator' must be a string.")
     
     # --- Core Logic ---
-    words1 = input_string1.split()
-    words2 = input_string2.split()
+    if separator is None:
+        parts1 = input_string1.split(separator)
+        parts2 = input_string2.split(separator)
+    else:
+        pattern = f"[{re.escape(separator)}]+"
 
-    if len(words1) != len(words2):
+        parts1 = [p for p in re.split(pattern, input_string1) if p]
+        parts2 = [p for p in re.split(pattern, input_string2) if p]
+
+    if len(parts1) != len(parts2):
         raise ValueError("Both strings must have the same number of words for comparison.")
 
     diff_list = []
-    for index in range(len(words1)):
-        if words1[index] != words2[index]:
+    for index in range(len(parts1)):
+        if parts1[index] != parts2[index]:
             diff_list.append({
                 'index': index,
-                'string1': words1[index],
-                'string2': words2[index]
+                'string1': parts1[index],
+                'string2': parts2[index]
             })
 
     return diff_list
