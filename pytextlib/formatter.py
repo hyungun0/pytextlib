@@ -153,8 +153,10 @@ def convert_case(input_string: str, style: str = 'snake') -> str:
     style = style.lower()
     
     # --- Core Logic ---
-    text_with_spaces = re.sub(r'([A-Z])', r' \1', input_string)
-    words = [word.lower() for word in re.split(r'[_\-\s]+', text_with_spaces) if word]
+    text = re.sub(r'([a-z0-9])([A-Z])', r'\1 \2', input_string)
+    text = re.sub(r'([A-Z])([A-Z][a-z])', r'\1 \2', text)
+    
+    words = [word.lower() for word in re.split(r'[_\-\s]+', text) if word]
 
     if not words:
         return ""
