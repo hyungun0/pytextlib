@@ -131,13 +131,14 @@ def convert_case(input_string: str, style: str = 'snake') -> str:
 
     Supported styles:
     - 'snake': hello_world
+    - 'constant': HELLO_WORLD
     - 'kebab': hello-world
     - 'camel': helloWorld
     - 'pascal': HelloWorld
 
     Args:
         input_string (str): The string to convert.
-        style (str): The target style ('snake', 'kebab', 'camel', 'pascal').
+        style (str): The target style ('snake', 'constant', 'kebab', 'camel', 'pascal').
 
     Returns:
         str: The converted string.
@@ -163,6 +164,8 @@ def convert_case(input_string: str, style: str = 'snake') -> str:
 
     if style == 'snake':
         return '_'.join(words)
+    elif style == 'constant':
+        return '_'.join(word.upper() for word in words)
     elif style == 'kebab':
         return '-'.join(words)
     elif style == 'camel':
