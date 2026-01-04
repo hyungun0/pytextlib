@@ -8,7 +8,7 @@ robust, and self-documented.
 
 from .analyzer import analyze_text, find_string_diff
 from .extractor import extract_emails, extract_urls
-from .formatter import convert_case, generate_initials, mask_text, mask_email, pad_text, remove_newlines, remove_punctuation, slugify, truncate_text
+from .formatter import convert_case, generate_initials, mask_email, mask_text, pad_text, remove_newlines, remove_punctuation, slugify, truncate_text
 from .parser import parse_csv
 from .validator import is_blank, is_email, validate_filename
 
@@ -21,11 +21,11 @@ __all__ = [
     "generate_initials",
     "is_blank",
     "is_email",
-    "mask_text",
     "mask_email",
+    "mask_text",
     "pad_text",
     "parse_csv",
-    "remove_newlines"
+    "remove_newlines",
     "remove_punctuation",
     "slugify",
     "truncate_text",
