@@ -328,3 +328,28 @@ def mask_email(input_string: str, mask_char: str = '*') -> str:
     masked_id = user_id[0] + (mask_char * (len(user_id) - 1))
     
     return f"{masked_id}@{domain}"
+
+
+def remove_newlines(input_string: str, replace_with: str = " ") -> str:
+    """
+    Removes all line breaks (\\n, \\r, \\r\\n) and replaces them with a specified string.
+
+    Args:
+        input_string (str): The text containing line breaks to be removed.
+        replace_with (str, optional): The string used to replace each line break. 
+                                      Defaults to a single space " ".
+
+    Returns:
+        str: The flattened string with all line breaks replaced.
+
+    Raises:
+        TypeError: If 'input_string' or 'replace_with' is not a string.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    if not isinstance(replace_with, str):
+        raise TypeError("Input 'replace_with' must be a string.")
+
+    # --- Core Logic ---
+    return replace_with.join(input_string.splitlines())
