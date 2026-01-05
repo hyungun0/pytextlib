@@ -268,6 +268,51 @@ def mask_text(input_string: str, start: int, end: int, mask_boundary_char: str =
     return input_string[:start] + mask_boundary_char * (actual_end - start) + input_string[actual_end:]
 
 
+def mask_middle(input_string: str, keep_start: int, keep_end: int, mask_char: str = '*') -> str:
+    """
+    Masks the middle portion of a string while keeping a specified number 
+    of characters at the beginning and the end.
+
+    Args:
+        input_string (str): The original string to mask.
+        keep_start (int): The number of characters to keep at the start.
+        keep_end (int): The number of characters to keep at the end.
+        mask_char (str, optional): The character used for masking. Defaults to '*'.
+
+    Returns:
+        str: The masked string.
+
+    Raises:
+        TypeError: If inputs are not the expected types.
+        ValueError: If keep_start or keep_end are negative, or mask_char is not one character.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    if not isinstance(keep_start, int) or not isinstance(keep_end, int):
+        raise TypeError("Inputs 'keep_start' and 'keep_end' must be integers.")
+    if not isinstance(mask_char, str):
+        raise TypeError("Input 'mask_char' must be a string.")
+    
+    if len(mask_char) != 1:
+        raise ValueError("Input 'mask_char' must be exactly one character.")
+    
+    if keep_start < 0 or keep_end < 0:
+        raise ValueError("Keep counts must be zero or positive.")
+    
+    # --- Core Logic ---
+    if keep_start + keep_end >= len(input_string):
+        return input_string
+
+    start_part = input_string[:keep_start]
+
+    end_index = len(input_string) - keep_end
+    end_part = input_string[end_index:]
+    
+    mask_len = len(input_string) - keep_start - keep_end
+    return start_part + (mask_char * mask_len) + end_part
+
+
 def remove_punctuation(input_string: str) -> str:
     """
     Removes all punctuation marks (symbols) from the string.
