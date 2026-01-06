@@ -398,3 +398,27 @@ def remove_newlines(input_string: str, replace_with: str = " ") -> str:
 
     # --- Core Logic ---
     return replace_with.join(input_string.splitlines())
+
+
+def remove_all_whitespace(input_string: str) -> str:
+    """
+    Removes all whitespace characters (spaces, tabs, newlines) from the string.
+
+    Unlike strip(), this function removes whitespace from the middle of the string
+    as well, resulting in a single continuous sequence of characters.
+
+    Args:
+        input_string (str): The string to remove whitespace from.
+
+    Returns:
+        str: The string with all whitespace removed.
+
+    Raises:
+        TypeError: If input_string is not a string.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+
+    # --- Core Logic ---
+    return "".join(input_string.split())
