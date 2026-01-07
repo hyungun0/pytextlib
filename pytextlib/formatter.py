@@ -422,3 +422,24 @@ def remove_all_whitespace(input_string: str) -> str:
 
     # --- Core Logic ---
     return "".join(input_string.split())
+
+
+def remove_digits(input_string: str) -> str:
+    """
+    Removes all numeric digits (0-9) from the string.
+
+    Args:
+        input_string (str): The string to remove digits from.
+
+    Returns:
+        str: The string with all digits removed.
+
+    Raises:
+        TypeError: If input_string is not a string.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    
+    # --- Core Logic ---
+    return "".join(char for char in input_string if not char.isdigit())
