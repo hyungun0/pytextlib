@@ -14,6 +14,18 @@ RFC5322_EMAIL_PATTERN = re.compile(r"""\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-
           |  \\[\x01-\x09\x0b\x0c\x0e-\x7f])+)
      \])$""", re.IGNORECASE | re.VERBOSE)
 
+URL_PATTERN = re.compile(r"""
+    ^https?://                   # 1. 프로토콜: http 또는 https로 시작
+    (?:                          # 2. 호스트 부분
+        (?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63} | # 일반 도메인
+        localhost |               # 로컬 호스트
+        \d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} # IPv4 주소
+    )
+    (?::\d+)?                    # 3. 포트: 선택 사항
+    (?:/?|[/?]\S+)$              # 4. 경로/쿼리: 선택 사항
+    """, re.IGNORECASE | re.VERBOSE)
+
+
 def is_email(input_string: str, validation_mode: str = "default") -> bool:
     """
     Validates if a string is a well-formed email address.
@@ -113,3 +125,19 @@ def validate_filename(input_string: str) -> bool:
         raise ValueError("Input 'input_string' cannot end with a space or a period.")
 
     return True
+
+
+def is_url(input_string: str) -> bool:
+    """
+    Validates if a string is a well-formed HTTP or HTTPS URL.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    
+    # --- Core Logic ---
+    url = input_string.strip()
+    if not url:
+        return False
+
+    return bool(URL_PATTERN.match(url))
