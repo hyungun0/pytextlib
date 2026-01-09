@@ -443,3 +443,21 @@ def remove_digits(input_string: str) -> str:
     
     # --- Core Logic ---
     return "".join(char for char in input_string if not char.isdigit())
+
+
+def remove_lines_containing(input_string: str, target: str) -> str:
+    """
+    Removes all lines from the string that contain the specified target substring.
+    """
+    #--- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    if not isinstance(target, str):
+        raise TypeError("Input 'target' must be a string")
+    
+    # --- Core Logic ---
+    lines = input_string.splitlines()
+
+    filtered_lines = [line for line in lines if target not in line]
+
+    return "\n".join(filtered_lines)
