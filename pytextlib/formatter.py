@@ -125,11 +125,11 @@ def generate_initials(input_string: str) -> str:
     return "".join(initials_list).upper()
 
 
-def convert_case(input_string: str, style: str = 'snake') -> str:
+def convert_case(input_string: str, mode: str = 'snake') -> str:
     """
-    Converts a string to the specified case style.
+    Converts a string to the specified case mode.
 
-    Supported styles:
+    Supported modes:
     - 'snake': hello_world
     - 'constant': HELLO_WORLD
     - 'kebab': hello-world
@@ -138,20 +138,20 @@ def convert_case(input_string: str, style: str = 'snake') -> str:
 
     Args:
         input_string (str): The string to convert.
-        style (str): The target style ('snake', 'constant', 'kebab', 'camel', 'pascal').
+        mode (str): The target mode ('snake', 'constant', 'kebab', 'camel', 'pascal').
 
     Returns:
         str: The converted string.
 
     Raises:
         TypeError: If the input is not a string.
-        ValueError: If an unknown style is specified.
+        ValueError: If an unknown mode is specified.
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
         raise TypeError("Input 'input_string' must be a string.")
 
-    style = style.lower()
+    mode = mode.lower()
     
     # --- Core Logic ---
     text = re.sub(r'([a-z0-9])([A-Z])', r'\1 \2', input_string)
@@ -162,18 +162,18 @@ def convert_case(input_string: str, style: str = 'snake') -> str:
     if not words:
         return ""
 
-    if style == 'snake':
+    if mode == 'snake':
         return '_'.join(words)
-    elif style == 'constant':
+    elif mode == 'constant':
         return '_'.join(word.upper() for word in words)
-    elif style == 'kebab':
+    elif mode == 'kebab':
         return '-'.join(words)
-    elif style == 'camel':
+    elif mode == 'camel':
         return words[0] + ''.join(word.capitalize() for word in words[1:])
-    elif style == 'pascal':
+    elif mode == 'pascal':
         return ''.join(word.capitalize() for word in words)
     else:
-        raise ValueError(f"Unknown style: '{style}'. Supported: snake, kebab, camel, pascal")
+        raise ValueError(f"Unknown mode: '{mode}'. Supported: snake, kebab, camel, pascal")
 
 
 def pad_text(input_string: str, width: int, fill_boundary_char: str = '_', side: str = 'right') -> str:
