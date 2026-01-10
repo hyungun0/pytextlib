@@ -173,7 +173,7 @@ def convert_case(input_string: str, mode: str = 'snake') -> str:
     elif mode == 'pascal':
         return ''.join(word.capitalize() for word in words)
     else:
-        raise ValueError(f"Unknown mode: '{mode}'. Supported: snake, kebab, camel, pascal")
+        raise ValueError(f"Unknown mode: '{mode}'. Supported: snake, constant, kebab, camel, pascal")
 
 
 def pad_text(input_string: str, width: int, fill_boundary_char: str = '_', side: str = 'right') -> str:
