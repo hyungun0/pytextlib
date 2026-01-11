@@ -334,43 +334,47 @@ def remove_punctuation(input_string: str) -> str:
     return "".join(char for char in input_string if char.isalnum() or char.isspace())
 
 
-def mask_email(input_string: str, mask_char: str = '*') -> str:
+def mask_email(input_string: str, keep_start: int = 1, keep_end: int = 0, mask_char: str = '*') -> str:
     """
-    Masks the user ID part of an email address to protect privacy.
-
-    This function keeps the first character of the user ID and replaces the rest
-    with the specified mask character. The domain part remains unchanged.
-    It reuses the 'is_email' validator for robust format verification.
+    Masks the user ID part of an email address.
+    Internal logic is handled by mask_middle for consistency.
 
     Args:
-        input_string (str): The email address to be masked.
+        input_string (str): The email address to mask.
+        keep_start (int, optional): Characters to keep at the start of the ID. Defaults to 1.
+        keep_end (int, optional): Characters to keep at the end of the ID. Defaults to 0.
         mask_char (str, optional): The character used for masking. Defaults to '*'.
 
     Returns:
-        str: The masked email address (e.g., 'u****@example.com').
+        str: The masked email address.
 
     Raises:
         TypeError: If 'input_string' or 'mask_char' is not a string.
-        ValueError: If 'mask_char' is not exactly one character, or
-                    if 'input_string' is not a valid email format.
+        ValueError: If 'input_string' is not a valid email, or if lengths are negative.
+
+    Examples:
+        >>> mask_email("user123@example.com")
+        'u******@example.com'
+        >>> mask_email("user123@example.com", keep_start=2, keep_end=1)
+        'us****3@example.com'
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
         raise TypeError("Input 'input_string' must be a string.")
     
-    if not isinstance(mask_char, str):
-        raise TypeError("Input 'mask_char' must be a string.")
-    
-    if len(mask_char) != 1:
-        raise ValueError("Input 'mask_char' must be exactly one character.")
-    
     if not is_email(input_string):
-        raise ValueError(f"Invalid email format: '{input_string}'")
+        raise ValueError(f"Input 'input_string' is not a valid email: {input_string}")
+        
+    if not isinstance(keep_start, int) or keep_start < 0:
+        raise ValueError("Input 'keep_start' must be a non-negative integer.")
+        
+    if not isinstance(keep_end, int) or keep_end < 0:
+        raise ValueError("Input 'keep_end' must be a non-negative integer.")
 
     # --- Core Logic ---
     user_id, domain = input_string.split('@')
 
-    masked_id = mask_middle(user_id, 1, 0, mask_char)
+    masked_id = mask_middle(user_id, keep_start=keep_start, keep_end=keep_end, mask_char=mask_char)
     
     return f"{masked_id}@{domain}"
 
