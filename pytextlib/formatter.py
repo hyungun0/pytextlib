@@ -370,7 +370,7 @@ def mask_email(input_string: str, mask_char: str = '*') -> str:
     # --- Core Logic ---
     user_id, domain = input_string.split('@')
 
-    masked_id = user_id[0] + (mask_char * (len(user_id) - 1))
+    masked_id = mask_middle(user_id, 1, 0, mask_char)
     
     return f"{masked_id}@{domain}"
 
