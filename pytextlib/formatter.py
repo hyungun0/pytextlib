@@ -285,6 +285,14 @@ def mask_middle(input_string: str, keep_start: int, keep_end: int, mask_char: st
     Raises:
         TypeError: If inputs are not the expected types.
         ValueError: If keep_start or keep_end are negative, or mask_char is not one character.
+
+    Examples:
+        >>> mask_middle("hello world", 2, 2)
+        'he*******ld'
+        >>> mask_middle("secret_key", 0, 3)
+        '*******key'
+        >>> mask_middle("12345", 1, 1, mask_char="#")
+        '1###5'
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
