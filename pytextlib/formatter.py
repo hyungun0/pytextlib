@@ -32,6 +32,8 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
     slug = ""
     for boundary_character in text:
         if boundary_character.isalnum() or boundary_character == separator:
+            if boundary_character == separator and slug.endswith(separator):
+                continue
             slug += boundary_character
 
     return slug
