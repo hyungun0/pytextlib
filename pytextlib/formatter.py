@@ -64,6 +64,8 @@ def truncate_text(input_string: str, max_length: int, suffix: str = "...", prese
         raise TypeError("Input 'input_string' must be a string.")
     if not isinstance(max_length, int):
         raise TypeError("Input 'max_length' must be an integer.")
+    if not isinstance(suffix, str):
+        raise TypeError("Input 'suffix' must be a string.")
     if not isinstance(preserve_words, bool):
         raise TypeError("Input 'preserve_words' must be a boolean.")
     if not isinstance(word_boundaries, str):
