@@ -21,7 +21,7 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
         raise TypeError("Input 'input_string' must be a string.")
     
     if len(separator) > 1 or separator.isalnum():
-        raise ValueError("Separator must be a single, non-alphanumeric boundary_character.")
+        raise ValueError("Input 'separator' must be a single, non-alphanumeric character.")
         
     # --- Core Logic ---
     text = input_string
