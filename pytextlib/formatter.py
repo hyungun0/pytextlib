@@ -36,7 +36,7 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
                 continue
             slug += boundary_character
 
-    return slug
+    return slug.strip(separator)
 
 
 def truncate_text(input_string: str, max_length: int, suffix: str = "...", preserve_words: bool = True, word_boundaries: str =" \n\t") -> str:
