@@ -141,3 +141,26 @@ def is_url(input_string: str) -> bool:
         return False
 
     return bool(URL_PATTERN.match(url))
+
+
+def has_digits(input_string: str) -> bool:
+    """
+    Checks if the string contains at least one numeric digit (0-9).
+    
+    This is useful for validation rules, such as requiring a number in a password.
+    
+    Args:
+        input_string (str): The string to check.
+
+    Returns:
+        bool: True if a digit is found, False otherwise.
+
+    Raises:
+        TypeError: If input_string is not a string.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    
+    # --- Core Logic ---
+    return any(char.isdigit() for char in input_string)

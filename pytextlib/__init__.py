@@ -19,6 +19,7 @@ __all__ = [
     "extract_urls",
     "find_string_diff",
     "generate_initials",
+    "has_digits",
     "is_blank",
     "is_email",
     "is_url",
