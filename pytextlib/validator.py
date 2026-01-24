@@ -104,7 +104,7 @@ def validate_filename(input_string: str) -> bool:
     if len(input_string) < 1 or len(input_string) > 255:
         raise ValueError("Input 'input_string' must be between 1 and 255 characters.")
     
-    forbidden_chars = "<>:\"/\|?*"
+    forbidden_chars = r'<>:"/\|?*'
     for char in input_string:
         if char in forbidden_chars:
             raise ValueError(f"Input 'input_string' contains a forbidden character: {char}")
