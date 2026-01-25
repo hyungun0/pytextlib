@@ -1,4 +1,5 @@
 import re
+import ipaddress
 
 # --- Patterns ---
 DEFAULT_EMAIL_PATTERN = re.compile(r"""\A[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@
@@ -164,3 +165,24 @@ def has_digits(input_string: str) -> bool:
     
     # --- Core Logic ---
     return any(char.isdigit() for char in input_string)
+
+def is_ip(input_string: str) -> bool:
+    """
+    Validates if the string is a valid IPv4 address.
+
+    Args:
+        input_string (str): The IP address string to validate.
+
+    Returns:
+        bool: True if valid IPv4, False otherwise.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+
+    # --- Core Logic ---
+    try:
+        ipaddress.IPv4Address(input_string)
+        return True
+    except ValueError:
+        return False
