@@ -166,23 +166,35 @@ def has_digits(input_string: str) -> bool:
     # --- Core Logic ---
     return any(char.isdigit() for char in input_string)
 
-def is_ip(input_string: str) -> bool:
+def is_ip(input_string: str, version: str = '4') -> bool:
     """
-    Validates if the string is a valid IPv4 address.
+    Validates if the string is a valid IP address.
+    Supports IPv4 (default) and IPv6.
 
     Args:
         input_string (str): The IP address string to validate.
+        version (str, optional): '4', '6', or 'any'. Defaults to '4'.
 
     Returns:
-        bool: True if valid IPv4, False otherwise.
+        bool: True if valid, False otherwise.
     """
     # --- Input Validation ---
     if not isinstance(input_string, str):
         raise TypeError("Input 'input_string' must be a string.")
-
+    
+    if version not in ('4', '6', 'any'):
+        raise ValueError("Input 'version' must be '4', '6', or 'any'.")
+    
     # --- Core Logic ---
     try:
-        ipaddress.IPv4Address(input_string)
+        if version == '4':
+            ipaddress.IPv4Address(input_string)
+        elif version == '6':
+            ipaddress.IPv6Address(input_string)
+        else: # version == any:
+            ipaddress.ip_address(input_string)
+        
         return True
     except ValueError:
         return False
+    
