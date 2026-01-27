@@ -26,6 +26,8 @@ URL_PATTERN = re.compile(r"""
     (?:/?|[/?]\S+)$              # 4. 경로/쿼리: 선택 사항
     """, re.IGNORECASE | re.VERBOSE)
 
+MAC_ADDRESS_PATTERN = re.compile(r"^[0-9A-Fa-f]{2}([-:])(?:[0-9A-Fa-f]{2}\1){4}[0-9A-Fa-f]{2}$")
+
 
 def is_email(input_string: str, mode: str = "default") -> bool:
     """
@@ -197,4 +199,22 @@ def is_ip(input_string: str, version: str = '4') -> bool:
         return True
     except ValueError:
         return False
+
+
+def is_mac_address(input_string: str) -> bool:
+    """
+    Validates if the string is a valid MAC address.
+    Uses the pre-compiled MAC_ADDRESS_PATTERN constant.
     
+    Args:
+        input_string (str): The MAC address string to validate.
+
+    Returns:
+        bool: True if valid, False otherwise.
+    """
+    # --- Input Validation ---
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+
+    # --- Core Logic ---
+    return bool(MAC_ADDRESS_PATTERN.match(input_string))

@@ -10,7 +10,7 @@ from .analyzer import analyze_text, find_string_diff
 from .extractor import extract_emails, extract_urls
 from .formatter import convert_case, generate_initials, mask_email, mask_middle, mask_text, pad_text, remove_all_whitespace, remove_digits, remove_lines_containing, remove_newlines, remove_punctuation, slugify, truncate_text
 from .parser import parse_csv
-from .validator import is_blank, is_email, is_ip, is_url, validate_filename
+from .validator import is_blank, is_email, is_ip, is_mac_address, is_url, validate_filename
 
 __all__ = [
     "analyze_text",
@@ -23,6 +23,7 @@ __all__ = [
     "is_blank",
     "is_email",
     "is_ip",
+    "is_mac_address",
     "is_url",
     "mask_email",
     "mask_middle",
