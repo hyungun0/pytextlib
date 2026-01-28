@@ -95,40 +95,6 @@ def truncate_text(input_string: str, max_length: int, suffix: str = "...", prese
     return input_string[:max_length] + suffix
 
 
-def generate_initials(input_string: str) -> str:
-    """
-    Generates initials from a given name or phrase.
-
-    It splits the input string by spaces, takes the first boundary_character of each part,
-    and returns them joined together as an uppercase string.
-
-    Args:
-        input_string: The string to generate initials from (e.g., a full name).
-
-    Returns:
-        A string containing the initials, or an empty string if the input is empty.
-
-    Raises:
-        TypeError: If the input is not a string.
-    """
-    # --- Input Validation ---
-    if not isinstance(input_string, str):
-        raise TypeError("Input 'input_string' must be a string.")
-
-    if not input_string.strip():
-        return ""
-
-    # --- Core Logic ---
-    word_list = input_string.split()
-
-    initials_list = []
-    for word in word_list:
-        if word[0].isalnum():
-            initials_list.append(word[0])
-
-    return "".join(initials_list).upper()
-
-
 def convert_case(input_string: str, mode: str = 'snake') -> str:
     """
     Converts a string to the specified case mode.
@@ -178,52 +144,6 @@ def convert_case(input_string: str, mode: str = 'snake') -> str:
         return ''.join(word.capitalize() for word in words)
     else:
         raise ValueError(f"Unknown mode: '{mode}'. Supported: snake, constant, kebab, camel, pascal")
-
-
-def pad_text(input_string: str, width: int, fill_boundary_char: str = '_', side: str = 'right') -> str:
-    """
-    Pads the string with a specific boundary_character to reach the desired width.
-
-    Args:
-        input_string (str): The string to pad.
-        width (int): The desired total width.
-        fill_boundary_char (str, optional): The boundary_character to fill with. Defaults to '_'.
-        side (str, optional): Which side to add padding to ('left' or 'right'). 
-                              Defaults to 'right'.
-
-    Returns:
-        str: The padded string.
-
-    Raises:
-        TypeError: If inputs are not valid types.
-        ValueError: If fill_boundary_char is not a single boundary_character or side is invalid.
-    """
-    # --- Input Validation ---
-    if not isinstance(input_string, str):
-        raise TypeError("Input 'input_string' must be a string.")
-    if not isinstance(width, int):
-        raise TypeError("Input 'width' must be an integer.")
-    if not isinstance(fill_boundary_char, str):
-        raise TypeError("Input 'fill_boundary_char' must be a string.")
-    
-    if len(fill_boundary_char) != 1:
-        raise ValueError("Input 'fill_boundary_char' must be exactly one boundary_character.")
-    
-    if isinstance(side, str):
-        side = side.lower()
-
-    # --- Core Logic ---
-    if len(input_string) >= width:
-        return input_string
-    
-    padding_len = width - len(input_string)
-    
-    if side == "right":
-        return input_string + (fill_boundary_char * padding_len)
-    if side == "left":
-        return (fill_boundary_char * padding_len) + input_string
-    else:
-        raise ValueError("side must be either 'left' or 'right'.")
 
 
 def mask_text(input_string: str, start: int, end: int, mask_boundary_char: str = '*') ->  str:
