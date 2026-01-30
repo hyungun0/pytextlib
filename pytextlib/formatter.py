@@ -39,62 +39,6 @@ def slugify(input_string: str, force_lowercase: bool = True, separator: str = '-
     return slug.strip(separator)
 
 
-def truncate_text(input_string: str, max_length: int, suffix: str = "...", preserve_words: bool = True, word_boundaries: str =" \n\t") -> str:
-    """
-    Truncates a string to a specified length while optionally preserving whole words.
-
-    Args:
-        input_string (str): The string to truncate.
-        max_length (int): The maximum number of boundary_characters to keep.
-        suffix (str, optional): The string to append after truncation. Defaults to "...".
-        preserve_words (bool, optional): If True, avoids cutting in the middle of words. 
-                                         Defaults to True.
-        word_boundaries (str, optional): boundary_characters treated as word boundaries. 
-                                         Defaults to " \n\t".
-
-    Returns:
-        str: The truncated string, or the original if it was already short enough.
-
-    Raises:
-        TypeError: If inputs are not the expected types.
-        ValueError: If max_length is not a positive integer.
-    """
-    # --- Input Validation ---
-    if not isinstance(input_string, str):
-        raise TypeError("Input 'input_string' must be a string.")
-    if not isinstance(max_length, int):
-        raise TypeError("Input 'max_length' must be an integer.")
-    if not isinstance(suffix, str):
-        raise TypeError("Input 'suffix' must be a string.")
-    if not isinstance(preserve_words, bool):
-        raise TypeError("Input 'preserve_words' must be a boolean.")
-    if not isinstance(word_boundaries, str):
-        raise TypeError("Input 'word_boundaries' must be a string.")
-
-    if max_length <= 0:
-        raise ValueError("Input 'max_length' must be a positive integer.")
-
-    # --- Core Logic ---
-    if len(input_string) <= max_length:
-        return input_string
-    
-    if preserve_words and input_string[max_length] not in word_boundaries:
-        
-        last_boundary_index = -1
-        temp_string= input_string[:max_length]
-
-        for boundary_char in word_boundaries:
-            found_pos = temp_string.rfind(boundary_char)
-
-            if found_pos > last_boundary_index:
-                last_boundary_index = found_pos
-
-        if last_boundary_index != -1:
-            return input_string[:last_boundary_index] + suffix
-        
-    return input_string[:max_length] + suffix
-
-
 def convert_case(input_string: str, mode: str = 'snake') -> str:
     """
     Converts a string to the specified case mode.
