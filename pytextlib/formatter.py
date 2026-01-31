@@ -341,3 +341,42 @@ def remove_lines_containing(input_string: str, target: str) -> str:
     filtered_lines = [line for line in lines if target not in line]
 
     return "\n".join(filtered_lines)
+
+
+def empty_to_none(input_string: str, null_values: list[str] = None) -> str | None:
+    """
+    Normalizes empty strings or specific placeholders to Python None.
+    
+    If 'null_values' is not provided, uses default set: {"-", "n/a", "null", "none", "nan"}
+    If 'null_values' IS provided, it replaces the default set entirely.
+
+    Args:
+        input_string (str): The string to check.
+        null_values (list[str], optional): A list of strings to treat as None.
+                                           e.g., ["Unknown", "TBD"]
+
+    Returns:
+        str | None: The cleaned string or None.
+    """
+    #--- Input Validation ---
+    if input_string is None:
+        return None
+    
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+    
+    # --- Core Logic ---
+    default_values = {"-", "n/a", "null", "none", "nan"}
+
+
+    if null_values is not None:
+        target_values =set(str(string).lower() for string in null_values)
+    else:
+        target_values = default_values
+
+    cleaned = input_string.strip()
+
+    if not cleaned or cleaned.lower() in target_values:
+        return None
+
+    return cleaned
