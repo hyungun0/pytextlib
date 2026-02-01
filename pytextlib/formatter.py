@@ -380,3 +380,37 @@ def empty_to_none(input_string: str, null_values: list[str] = None) -> str | Non
         return None
 
     return cleaned
+
+def str_to_bool(input_string: str, strict: bool = False) -> bool:
+    """
+    Converts diverse human inputs (y, yes, 1, on) to a standard boolean.
+    
+    True values: 'y', 'yes', 't', 'true', 'on', '1'
+    False values: 'n', 'no', 'f', 'false', 'off', '0'
+    
+    Args:
+        input_string (str): The string to convert.
+        strict (bool): If True, raise error on unknown inputs.
+
+    Returns:
+        bool: The converted boolean value.
+    """
+    #--- Input Validation ---
+    if isinstance(input_string, (bool, int)):
+        return bool(input_string)
+        
+    if not isinstance(input_string, str):
+        raise TypeError("Input 'input_string' must be a string.")
+
+    # --- Core Logic ---
+    normalized = input_string.strip().lower()
+
+    if normalized in ('y', 'yes', 't', 'true', 'on', '1'):
+        return True
+    elif normalized in ('n', 'no', 'f', 'false', 'off', '0'):
+        return False
+    
+    if strict:
+        raise ValueError(f"Invalid boolean string: '{input_string}'")
+    
+    return False
