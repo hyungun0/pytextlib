@@ -1,9 +1,10 @@
 """
-pytextlib: A collection of simple utility functions for text processing.
+pytextlib: A text processing library dedicated to Data Sanitization.
 
-This package provides reliable, easy-to-use tools for common and repetitive
-text-manipulation tasks in Python. Each function is designed to be clear,
-robust, and self-documented.
+This package focuses on normalizing and validating 'dirty' human input data.
+It helps developers easily convert inconsistent user inputs (like "yes/no", 
+"-", "N/A") into standard Python types, ensuring data integrity before 
+database storage or processing.
 """
 
 from .extractor import extract_emails, extract_urls
